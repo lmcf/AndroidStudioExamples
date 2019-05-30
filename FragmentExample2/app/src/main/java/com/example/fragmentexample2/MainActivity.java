@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements
 
         //Asociamos variables a fragments
         bienvenido = new FragmentBienvenida();
-        pantalla1 = new itemfragment1();
+        pantalla1 = new itemfragment1().newInstance("Parametro nº 1","Parametro nº 2", "Parametro nº 3");
 
         //Para mostrar 1 frament nada mas empezar, hacemos esto, NO OLVIDAR COMMIT()
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,bienvenido).commit();
@@ -41,13 +42,15 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fmt = getSupportFragmentManager().beginTransaction();
         switch (item.getItemId()){
             case R.id.fragment1:
-                Fragment fragment = new itemfragment1().newInstance("parametro1","parametro2","parametro3");
-                fm.beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                fmt.replace(R.id.fragment_container,pantalla1);
+                break;
 
         }
+
+        fmt.commit();
 
         return super.onOptionsItemSelected(item);
     }
